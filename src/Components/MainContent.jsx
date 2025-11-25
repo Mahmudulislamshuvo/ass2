@@ -1,12 +1,20 @@
-import React from "react";
+const MainContent = ({ formData }) => {
+  const getDomain = (url) => {
+    try {
+      const u = new URL(url);
+      return u.hostname.replace(/^www\./, "");
+    } catch {
+      const match = String(url).match(/:\/\/(?:www\.)?([^/]+)/);
+      return match ? match[1] : String(url || "");
+    }
+  };
 
-const MainContent = () => {
   return (
     <div>
       <main className="p-8">
         <div className="max-w-7xl mx-auto space-y-10 px-4">
           {/* <!-- Search, Sort, and Filter Buttons --> */}
-          <section className="rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 p-6 shadow-2xl shadow-black/40 backdrop-blur">
+          <section className="rounded-3xl border border-neutral-800  from-neutral-900/80 to-neutral-900/40 p-6 shadow-2xl shadow-black/40 backdrop-blur">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
               {/* <!-- Search Bar --> */}
               <label className="relative flex-1">
@@ -63,7 +71,11 @@ const MainContent = () => {
                     Fb
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold">Facebook</h3>
+                    <h3 className="text-lg font-semibold">
+                      {formData?.websiteURL
+                        ? getDomain(formData.websiteURL)
+                        : "Facebook"}
+                    </h3>
                     <p className="text-xs uppercase tracking-wide text-neutral-500">
                       Social
                     </p>

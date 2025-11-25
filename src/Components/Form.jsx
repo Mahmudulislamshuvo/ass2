@@ -1,8 +1,20 @@
-const Form = () => {
+const Form = ({ setFormData, data }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  console.log(data);
+
   return (
     <div>
       <div className="max-w-7xl mx-auto mt-8 px-4">
-        <form className="mb-10 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/70 to-neutral-800/40 p-8 shadow-2xl shadow-black/40 backdrop-blur">
+        <form className="mb-10 rounded-2xl border border-neutral-800  from-neutral-900/70 to-neutral-800/40 p-8 shadow-2xl shadow-black/40 backdrop-blur">
           <div className="mb-8 flex flex-col gap-3">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-blue-400">
               New bookmark
@@ -25,7 +37,10 @@ const Form = () => {
                 </span>
                 <input
                   type="url"
+                  name="websiteURL"
+                  value={data?.websiteURL}
                   placeholder="https://example.com"
+                  onChange={handleChange}
                   className="w-full bg-transparent text-base text-white placeholder:text-neutral-500 focus:outline-none"
                 />
                 <span className="text-xs text-neutral-500">
@@ -45,8 +60,10 @@ const Form = () => {
                     </p>
                   </div>
                   <input
+                    onChange={handleChange}
                     type="color"
-                    value="#3b82f6"
+                    name="faviconColor"
+                    value={data?.faviconColor}
                     className="h-12 w-12 cursor-pointer rounded-full border border-neutral-700 bg-neutral-800 p-1 shadow-inner shadow-black/50"
                   />
                 </div>
@@ -63,26 +80,59 @@ const Form = () => {
                 <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
                   Category
                 </span>
-                <select className="w-full bg-transparent text-base text-white outline-none">
-                  <option className="bg-neutral-900 text-white">
+                <select
+                  name="catagory"
+                  onChange={handleChange}
+                  className="w-full bg-transparent text-base text-white outline-none"
+                >
+                  <option
+                    value={"Select category"}
+                    className="bg-neutral-900 text-white"
+                  >
                     Select category
                   </option>
-                  <option className="bg-neutral-900 text-white">Social</option>
-                  <option className="bg-neutral-900 text-white">Video</option>
-                  <option className="bg-neutral-900 text-white">Design</option>
-                  <option className="bg-neutral-900 text-white">
+                  <option
+                    value={"Social"}
+                    className="bg-neutral-900 text-white"
+                  >
+                    Social
+                  </option>
+                  <option value={"Video"} className="bg-neutral-900 text-white">
+                    Video
+                  </option>
+                  <option
+                    value={"Design"}
+                    className="bg-neutral-900 text-white"
+                  >
+                    Design
+                  </option>
+                  <option
+                    value={"Streaming"}
+                    className="bg-neutral-900 text-white"
+                  >
                     Streaming
                   </option>
-                  <option className="bg-neutral-900 text-white">
+                  <option
+                    value={"Productivity"}
+                    className="bg-neutral-900 text-white"
+                  >
                     Productivity
                   </option>
-                  <option className="bg-neutral-900 text-white">
+                  <option
+                    value={"Entertainment"}
+                    className="bg-neutral-900 text-white"
+                  >
                     Entertainment
                   </option>
-                  <option className="bg-neutral-900 text-white">
+                  <option
+                    value={"Shopping"}
+                    className="bg-neutral-900 text-white"
+                  >
                     Shopping
                   </option>
-                  <option className="bg-neutral-900 text-white">Music</option>
+                  <option value={"Music"} className="bg-neutral-900 text-white">
+                    Music
+                  </option>
                 </select>
                 <span className="text-xs text-neutral-500">
                   Helps you filter quicker later.
@@ -97,6 +147,9 @@ const Form = () => {
                   Username
                 </span>
                 <input
+                  name="username"
+                  onChange={handleChange}
+                  value={data?.username}
                   type="text"
                   placeholder="Enter username"
                   className="w-full bg-transparent text-base text-white placeholder:text-neutral-500 focus:outline-none"
@@ -112,6 +165,9 @@ const Form = () => {
                   Password
                 </span>
                 <input
+                  name="password"
+                  onChange={handleChange}
+                  value={data?.password}
                   type="password"
                   placeholder="Enter password"
                   className="w-full bg-transparent text-base text-white placeholder:text-neutral-500 focus:outline-none"
