@@ -1,13 +1,7 @@
+import { useState } from "react";
+
 const MainContent = ({ bookmarks }) => {
-  // const getDomain = (url) => {
-  //   try {
-  //     const u = new URL(url);
-  //     return u.hostname.replace(/^www\./, "");
-  //   } catch {
-  //     const match = String(url).match(/:\/\/(?:www\.)?([^/]+)/);
-  //     return match ? match[1] : String(url || "");
-  //   }
-  // };
+  const [passwordToggle, setPasswordToggle] = useState(null);
 
   console.log(bookmarks);
 
@@ -65,11 +59,17 @@ const MainContent = ({ bookmarks }) => {
 
           {/* <!-- Password Cards Grid --> */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {bookmarks?.map((data) => (
-              <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
+            {bookmarks?.map((data, i) => (
+              <article
+                key={i}
+                className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20"
+              >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-blue-500/10 text-sm font-semibold uppercase text-blue-400">
+                    <div
+                      style={{ color: data.faviconColor }}
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-blue-500/10 text-sm font-semibold uppercase`}
+                    >
                       Fb
                     </div>
                     <div>
@@ -86,289 +86,73 @@ const MainContent = ({ bookmarks }) => {
                     </div>
                   </div>
                 </div>
-                <p className="mt-4 text-sm text-neutral-400">facebook.com</p>
+                <p className="mt-4 text-sm text-neutral-400">
+                  {data.websiteURL.split("//")[1]}
+                </p>
                 <dl className="mt-5 space-y-3 text-sm">
                   <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
                     <dt className="text-xs uppercase tracking-wide text-neutral-500">
                       Username
                     </dt>
-                    <dd className="text-neutral-50">john.doe@email.com</dd>
+                    <dd className="text-neutral-50">{data.username}</dd>
                   </div>
                   <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
                     <dt className="text-xs uppercase tracking-wide text-neutral-500">
                       Password
                     </dt>
                     <dd className="flex items-center gap-2 text-neutral-50">
-                      <span>••••••••</span>
-                      <button className="text-xs font-semibold text-blue-400">
-                        Reveal
+                      {/* <span>{passwordToggle ? data.password : "••••••••"}</span> */}
+                      <span>
+                        {passwordToggle === i ? data.password : "••••••••"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // যদি আগে থেকেই এই কার্ডটি খোলা থাকে, তাহলে বন্ধ করে দাও (null)
+                          // আর যদি না থাকে, তাহলে এই কার্ডের index সেট করো (i)
+                          setPasswordToggle(passwordToggle === i ? null : i);
+                        }}
+                        className="text-xs font-semibold text-blue-400 cursor-pointer"
+                      >
+                        {passwordToggle === i ? "Hide" : "Reveal"}
                       </button>
                     </dd>
                   </div>
                 </dl>
               </article>
             ))}
-            {/* <!-- Card 1 - Facebook --> */}
-
-            {/* <!-- Card 2 - YouTube --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-red-500/10 text-sm font-semibold uppercase text-red-400">
-                    Yt
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">YouTube</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Video
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">youtube.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">myaccount</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 3 - Dribbble --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-pink-500/10 text-sm font-semibold uppercase text-pink-300">
-                    Db
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Dribbble</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Design
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">dribbble.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">designer_pro</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 4 - Twitch --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-purple-500/10 text-sm font-semibold uppercase text-purple-300">
-                    Tw
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Twitch</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Streaming
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">twitch.tv</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">streamer_123</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 5 - GitHub --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-neutral-500/10 text-sm font-semibold uppercase text-neutral-300">
-                    Gh
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">GitHub</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Productivity
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">github.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">devuser</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 6 - Netflix --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-red-600/10 text-sm font-semibold uppercase text-red-400">
-                    Nx
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Netflix</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Entertainment
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">netflix.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">user@email.com</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 7 - Amazon --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-yellow-500/10 text-sm font-semibold uppercase text-yellow-400">
-                    Am
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Amazon</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Shopping
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">amazon.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">shopper@email.com</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
-
-            {/* <!-- Card 8 - Spotify --> */}
-            <article className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-neutral-800 bg-green-500/10 text-sm font-semibold uppercase text-green-400">
-                    Sp
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">Spotify</h3>
-                    <p className="text-xs uppercase tracking-wide text-neutral-500">
-                      Music
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">spotify.com</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Username
-                  </dt>
-                  <dd className="text-neutral-50">musiclover</dd>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900/60 px-4 py-3">
-                  <dt className="text-xs uppercase tracking-wide text-neutral-500">
-                    Password
-                  </dt>
-                  <dd className="flex items-center gap-2 text-neutral-50">
-                    <span>••••••••</span>
-                    <button className="text-xs font-semibold text-blue-400">
-                      Reveal
-                    </button>
-                  </dd>
-                </div>
-              </dl>
-            </article>
           </div>
+          {bookmarks.length === 0 && (
+            /* --- EMPTY STATE DESIGN --- */
+            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-neutral-800 bg-neutral-900/30 py-20 text-center">
+              {/* Icon Container */}
+              <div className="mb-6 rounded-full bg-neutral-800/50 p-6 ring-1 ring-neutral-700/50">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="h-10 w-10 text-neutral-400"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                  />
+                </svg>
+              </div>
+
+              {/* Text */}
+              <h3 className="text-xl font-bold text-white">
+                No bookmarks saved yet
+              </h3>
+              <p className="mt-2 max-w-sm text-sm text-neutral-500">
+                Your saved items will appear here. Fill out the form above to
+                add your first credential.
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>
