@@ -1,21 +1,17 @@
-const Form = ({ setFormData, data }) => {
+const Form = ({ setFormData, data, handleFormSubmit }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  console.log(data);
-
   return (
     <div>
       <div className="max-w-7xl mx-auto mt-8 px-4">
         <form
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleFormSubmit}
           className="mb-10 rounded-2xl border border-neutral-800  from-neutral-900/70 to-neutral-800/40 p-8 shadow-2xl shadow-black/40 backdrop-blur"
         >
           <div className="mb-8 flex flex-col gap-3">
