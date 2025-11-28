@@ -3,9 +3,9 @@ import { useState } from "react";
 const MainContent = ({ bookmarks }) => {
   const [passwordToggle, setPasswordToggle] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const lowercaseQuery = searchQuery.toLowerCase();
-
   const filteredBookmarks = bookmarks.filter((data) => {
     const matchUrl = data.websiteURL.toLowerCase().includes(lowercaseQuery);
     const matchUsername = data.username.toLowerCase().includes(lowercaseQuery);
@@ -13,6 +13,24 @@ const MainContent = ({ bookmarks }) => {
     console.log(matchUrl, matchUsername, matchCategory);
 
     return matchUrl || matchUsername || matchCategory;
+  });
+
+  // Sorting functionality for ascending or descending order
+  const sortedAndFilteredData = [...filteredBookmarks].sort((a, b) => {
+    //ডোমেইন নেম বা URL এর ওপর ভিত্তি করে সর্ট করব
+    const nameA = a.websiteURL
+      .replace(/^(?:https?:\/\/)?(?:www\.)?/i, "")
+      .split(".")[0]
+      .toLowerCase();
+    const nameB = b.websiteURL
+      .replace(/^(?:https?:\/\/)?(?:www\.)?/i, "")
+      .split(".")[0]
+      .toLowerCase();
+    if (sortOrder === "asc") {
+      return nameA.localeCompare(nameB); // A থেকে Z
+    } else {
+      return nameB.localeCompare(nameA); // Z থেকে A
+    }
   });
 
   return (
@@ -48,22 +66,30 @@ const MainContent = ({ bookmarks }) => {
                 />
               </label>
 
+              {/* ৩. Sort Button আপডেট করা */}
               <div className="flex flex-wrap gap-2">
-                <button className="inline-flex items-center gap-2 rounded-2xl border border-neutral-800/80 bg-neutral-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-300 transition hover:border-blue-500 hover:text-white">
+                <button
+                  onClick={() =>
+                    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
+                  }
+                  className="inline-flex items-center gap-2 rounded-2xl border border-neutral-800/80 bg-neutral-900/80 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-300 transition hover:border-blue-500 hover:text-white"
+                >
                   <svg
-                    className="h-4 w-4"
+                    className={`h-4 w-4 transition-transform duration-300 ${
+                      sortOrder === "desc" ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M3 4h18l-8 8v6l-4 4v-8z"
                     ></path>
                   </svg>
-                  Sort by
+                  Sort by {sortOrder === "asc" ? "(A-Z)" : "(Z-A)"}
                 </button>
               </div>
             </div>
@@ -71,7 +97,7 @@ const MainContent = ({ bookmarks }) => {
 
           {/* <!-- Password Cards Grid --> */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredBookmarks?.map((data, i) => (
+            {sortedAndFilteredData?.map((data, i) => (
               <article
                 key={i}
                 className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20"
