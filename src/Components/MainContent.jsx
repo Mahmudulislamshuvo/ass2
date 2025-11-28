@@ -133,6 +133,11 @@ const MainContent = ({ bookmarks }) => {
                 </dl>
               </article>
             ))}
+            {searchQuery.length > 0 && filteredBookmarks.length === 0 && (
+              <p className="text-center text-sm text-neutral-500 col-span-full py-10">
+                No credentials match your search "{searchQuery}".
+              </p>
+            )}
           </div>
           {bookmarks.length === 0 && (
             /* --- EMPTY STATE DESIGN --- */
