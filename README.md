@@ -94,7 +94,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 1.  **Clone the repository:**
 
     ```sh
-    git clone https://your-repository-link.git
+    git clone https://github.com/Mahmudulislamshuvo/ass2
     ```
 
 2.  **Navigate to the project directory:**
@@ -146,6 +146,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ### 📫 **Contact**
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - your.email@example.com
+My Facebook - [Mahmudul Islam](https://www.facebook.com/mahmudulislamshuvo.bd/) - mahmudulislammern@gmail.com
 
-Project Link: [https://github.com/your_username/ass2](https://github.com/your_username/ass2)
+My Github Link: [Mahmudul Islam](https://github.com/Mahmudulislamshuvo)
+
+My Linkedin: [Mahmudul Islam](https://www.linkedin.com/in/mahmudul-islam-shuvo/)
