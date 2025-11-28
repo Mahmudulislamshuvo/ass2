@@ -10,7 +10,6 @@ const MainContent = ({ bookmarks }) => {
     const matchUrl = data.websiteURL.toLowerCase().includes(lowercaseQuery);
     const matchUsername = data.username.toLowerCase().includes(lowercaseQuery);
     const matchCategory = data.catagory?.toLowerCase().includes(lowercaseQuery);
-    console.log(matchUrl, matchUsername, matchCategory);
 
     return matchUrl || matchUsername || matchCategory;
   });

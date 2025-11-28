@@ -3,6 +3,7 @@ import Footer from "./Components/Footer";
 import Form from "./Components/Form";
 import Header from "./components/Header";
 import MainContent from "./Components/MainContent";
+import { SuccessToast } from "./utils/toastify";
 
 const App = () => {
   const [bookmarks, setBookmarks] = useState([]);
@@ -29,13 +30,15 @@ const App = () => {
     // saving data in bookmarks array
     setBookmarks((previousData) => [...previousData, formData]);
     // reset form data fileds
-    // setFormData({
-    //   websiteURL: "",
-    //   faviconColor: "#3b82f6",
-    //   catagory: "Select category",
-    //   username: "",
-    //   password: "",
-    // });
+    setFormData({
+      websiteURL: "",
+      faviconColor: "#3b82f6",
+      catagory: "Select category",
+      username: "",
+      password: "",
+    });
+
+    SuccessToast("Added to bookmark successfully!");
   };
 
   return (

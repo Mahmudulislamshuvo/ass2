@@ -1,3 +1,5 @@
+import { SuccessToast } from "../utils/toastify";
+
 const Form = ({ setFormData, data, handleFormSubmit }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -185,6 +187,7 @@ const Form = ({ setFormData, data, handleFormSubmit }) => {
             <div className="flex flex-1 justify-end gap-3">
               <button
                 type="reset"
+                // onClick={() => setFormData("")}
                 className="w-full rounded-full border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 transition hover:border-neutral-500 hover:text-white md:w-auto"
               >
                 Clear
