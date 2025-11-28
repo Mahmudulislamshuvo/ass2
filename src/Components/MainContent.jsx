@@ -2,8 +2,18 @@ import { useState } from "react";
 
 const MainContent = ({ bookmarks }) => {
   const [passwordToggle, setPasswordToggle] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  console.log(bookmarks);
+  const lowercaseQuery = searchQuery.toLowerCase();
+
+  const filteredBookmarks = bookmarks.filter((data) => {
+    const matchUrl = data.websiteURL.toLowerCase().includes(lowercaseQuery);
+    const matchUsername = data.username.toLowerCase().includes(lowercaseQuery);
+    const matchCategory = data.catagory?.toLowerCase().includes(lowercaseQuery);
+    console.log(matchUrl, matchUsername, matchCategory);
+
+    return matchUrl || matchUsername || matchCategory;
+  });
 
   return (
     <div>
@@ -31,6 +41,8 @@ const MainContent = ({ bookmarks }) => {
                 </span>
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search saved credentials"
                   className="w-full rounded-2xl border border-neutral-800 bg-neutral-950/60 py-3 pl-11 pr-4 text-sm text-white placeholder:text-neutral-500 transition focus:border-blue-500 focus:bg-neutral-950 focus:outline-none"
                 />
@@ -59,7 +71,7 @@ const MainContent = ({ bookmarks }) => {
 
           {/* <!-- Password Cards Grid --> */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {bookmarks?.map((data, i) => (
+            {filteredBookmarks?.map((data, i) => (
               <article
                 key={i}
                 className="rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30 transition hover:-translate-y-1 hover:border-blue-500/60 hover:shadow-blue-500/20"
