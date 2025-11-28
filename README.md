@@ -18,7 +18,7 @@ Bookmark Vault is a front-end application designed to help users keep their most
 
 ### 📸 **Application Screenshots**
 
-_Here are a few snapshots of the application in action. (Note: The Google Drive links below may not render correctly. Please replace them with direct image links from a service like Imgur)._
+_Here are a few snapshots of the application in action._
 
 |                                               Main Dashboard                                               |                                      Add New Bookmark Form                                       |
 | :--------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------: |
